@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width,initial-scale=1"/>
+		<title>JUIL Settings</title>
+
+		<link rel="stylesheet" href="https://woahitsjeebus.github.io/JUIL/juil.css">
+	</head>
+
+	<body>
+		<div class="wrap">
+			<header>
+				<div>
+					<h1>Settings</h1>
+					<div class="sub">
+						Settings for project:
+						<code class="inline" id="projectName">detecting…</code>
+					</div>
+				</div>
+			</header>
+
+			<div class="grid">
+				<section class="card">
+					<div class="head">
+						<div class="title">Theme</div>
+					</div>
+
+					<div style="padding:14px">
+						<button id="resetBtn">Reset Theme</button>
+					</div>
+				</section>
+			</div>
+
+			<div class="tabsBar">
+				<nav class="tabs">
+					<button class="tabBtn" id="backBtn">
+						<span class="tabDot"></span>
+						Return
+					</button>
+
+					<a class="tabBtn active" data-tab="settings">
+						<span class="tabDot"></span>
+						Settings
+					</a>
+				</nav>
+			</div>
+		</div>
+
+		<script type="module">
+			import {
+				loadSettings,
+				saveSettings,
+				applyTheme,
+				autoMarkActiveTab
+			} from "../site.js";
+
+			/* Project Detection */
+			function detectProjectId() {
+				try {
+					const params = new URLSearchParams(location.search)
+
+					if (params.has("project"))
+						return params.get("project").toLowerCase()
+
+					const path = location.pathname
+						.replace(/^\/+/, "")
+						.split("/")[0]
+
+					if (!path)
+						return "root" 
+					return path.replace(/[^a-z0-9_-]/gi,"").toLowerCase() 
+				}
+				catch {
+					return "unknown"
+				}
+			}
+
+			function getProjectKey() {
+				return `JUIL_SETTINGS_${detectProjectId()}`
+			}
+
+			/* UI Init */
+			autoMarkActiveTab("settings")
+
+			const projectId = detectProjectId()
+			document.getElementById("projectName").textContent = projectId
+
+			/* Back button */
+			const ref = document.referrer
+			document.getElementById("backBtn").onclick = () => {
+				if (ref)
+					location.href = ref
+				else if (history.length > 1)
+					history.back()
+				else
+					location.href = "/"
+			}
+
+			/* Settings logic */
+			function loadProjectSettings() {
+				try {
+					return JSON.parse(localStorage.getItem(getProjectKey())) || {}
+				}
+				catch {
+					return {}
+				}
+			}
+
+			function saveProjectSettings(data) {
+				localStorage.setItem(
+					getProjectKey(),
+					JSON.stringify(data || {})
+				)
+			}
+
+			/* Example reset button */
+			document.getElementById("resetBtn").onclick = () => {
+				localStorage.removeItem(getProjectKey())
+				location.reload()
+			}
+		</script>
+	</body>
+</html>
