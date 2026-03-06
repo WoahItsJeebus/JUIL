@@ -52,7 +52,8 @@
 				loadSettings,
 				saveSettings,
 				applyTheme,
-				autoMarkActiveTab
+				autoMarkActiveTab,
+				startOrbBackground
 			} from "../site.js";
 
 			/* Project Detection */
@@ -81,7 +82,10 @@
 			}
 
 			/* UI Init */
+			const settings = loadSettings()
+			applyTheme(settings)
 			autoMarkActiveTab("settings")
+			startOrbBackground()
 
 			const projectId = detectProjectId()
 			document.getElementById("projectName").textContent = projectId
