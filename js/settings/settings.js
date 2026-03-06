@@ -1,5 +1,5 @@
+import { startOrbBackground } from "../background/orbs.js";
 export const JUIL_SETTINGS_KEY = "JUIL_SETTINGS_v1";
-
 export function getDefaultAppSettings() {
 	return {
 		version: 1,
