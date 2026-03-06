@@ -1,16 +1,2 @@
 
-.card{
-  border:1px solid var(--border);
-  border-radius:16px;
-  overflow:hidden;
-  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
-}
-
-.card .head{
-  padding:14px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  border-bottom:1px solid var(--border);
-}
+.card{border:1px solid var(--border);border-radius:16px;background:rgba(255,255,255,.03);}
