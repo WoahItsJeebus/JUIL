@@ -356,7 +356,7 @@
 			
 			// If another tab changes settings, resync UI here too
 			window.addEventListener("storage", (ev) => {
-			  if (ev.key !== "JWWT_SETTINGS_v1") return;
+			  if (ev.key !== "JUIL_SETTINGS_v1") return;
 			  S = loadAppSettings();
 			  syncUiFromSettings(S);
 			});
