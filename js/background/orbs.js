@@ -1,11 +1,19 @@
+let __orbBgStop = null
+let __orbBgRunning = false
+
 export function startOrbBackground(opts = {}) {
 	const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+	
 	if (reduce) return {
 		stop() {}
 	};
 
-	// restart cleanly
-	if (typeof __orbBgStop === "function") __orbBgStop();
+	// stop any existing background
+	if (__orbBgStop) {
+		__orbBgStop()
+	}
+
+	__orbBgRunning = true
 
 	const cfg = {
 		maxOrbs: 5,
@@ -423,7 +431,10 @@ export function startOrbBackground(opts = {}) {
 			}
 		}
 	}
-	__orbBgStop = stop;
+
+	__orbBgStop = null
+	__orbBgRunning = false
+
 	return {
 		stop
 	};
