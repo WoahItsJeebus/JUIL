@@ -1,0 +1,35 @@
+
+.tabsBar{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:9999;
+}
+
+.tabsBar .tabs{
+  display:flex;
+  gap:8px;
+  padding:8px;
+  border:1px solid var(--border);
+  border-radius:24px;
+  background:rgba(0,0,0,.6);
+  width:fit-content;
+  margin:0 auto 12px auto;
+}
+
+.tabBtn{
+  border:1px solid transparent;
+  background:transparent;
+  color:var(--muted);
+  padding:8px 12px;
+  border-radius:24px;
+  font-weight:700;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.tabBtn.active{
+  border:1px solid rgba(255,255,255,.5);
+  color:var(--text);
+}
