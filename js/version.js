@@ -1,4 +1,4 @@
-export let _VERSION = "unknown";
+export let _VERSION = "1.0.0.1";
 
 async function loadVersion() {
 	try {
