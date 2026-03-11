@@ -1,6 +1,84 @@
-.bgOrbs{
-	position:fixed;
-	inset:0;
-	pointer-events:none;
-	z-index:0;
+/* ============================================================
+   Orb background layer (required for startOrbBackground())
+   ============================================================ */
+
+.bgOrbs {
+	position: fixed;
+	inset: 0;
+	overflow: hidden;
+	pointer-events: none;
+	z-index: 0;
+}
+
+:root {
+	--tabsDockPad: 120px;
+	/* fallback if JS doesn't run */
+}
+
+.wrap {
+	position: relative;
+	z-index: 1;
+	padding-bottom: calc(var(--tabsDockPad) + env(safe-area-inset-bottom));
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Orb container now holds 2 inner layers that crossfade (morph),
+   instead of creating/removing many .bgOrb nodes (layering). */
+.bgOrb {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 420px;
+	height: 420px;
+	border-radius: 999px;
+
+	filter: blur(24px);
+	opacity: 0;
+	mix-blend-mode: screen;
+
+	transform: translate3d(0, 0, 0);
+	will-change: left, top, width, height, transform, opacity, filter;
+}
+
+.bgOrbLayer {
+	position: absolute;
+	inset: 0;
+	border-radius: 999px;
+
+	background: radial-gradient(circle,
+			rgba(var(--rgb), var(--a)) 0%,
+			rgba(var(--rgb), 0) 70%);
+
+	opacity: 0;
+	will-change: opacity;
+}
+
+@keyframes orbLife {
+	0% {
+		opacity: 0;
+		transform: translate3d(0, 0, 0) scale(0.6);
+	}
+
+	18% {
+		opacity: 0.85;
+		transform: translate3d(calc(var(--dx) * 0.25), calc(var(--dy) * 0.25), 0) scale(1.06);
+	}
+
+	70% {
+		opacity: 0.72;
+		transform: translate3d(calc(var(--dx) * 0.85), calc(var(--dy) * 0.85), 0) scale(1.12);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translate3d(var(--dx), var(--dy), 0) scale(0.72);
+	}
+}
+
+/* Settings hard-off helpers (driven by JS) */
+:root.reduceMotion .bgOrbs,
+:root.orbsOff .bgOrbs {
+	display: none;
 }

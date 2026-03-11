@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+		<meta name="theme-color" content="#0b0f17">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<title>Template Title</title>
+		<link rel="icon" href="favicon.ico" sizes="any">
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+		<link rel="stylesheet" href="./assets/site.css">
+	</head>
+
+	<body>
+		<div class="wrap">
+			<header>
+				<div>
+					<h1>Universal Template</h1>
+					<div class="sub">data-driven table template</div>
+				</div>
+			</header>
+
+			<div class="fadeWrap fadeScroll" id="toolbarFade" style="margin-bottom:12px;">
+				<div class="toolbar hScroll" id="toolbarScroll">
+					<div class="pill" id="storagePill">Storage: Local</div>
+					<div class="pill" id="tzPill">Local TZ: —</div>
+					<div class="pill" id="statusPill">Status: —</div>
+				</div>
+			</div>
+
+			<div class="grid">
+				<div class="card">
+					<div class="head">
+						<div class="title">Sample Data</div>
+						<div class="tag">template</div>
+					</div>
+					<div class="tableScroll">
+						<table>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Description</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody id="dataTable">
+								<!-- Populated by script -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div class="footer" style="display:flex;justify-content:center;margin-top:14px;"><code class="inline" id="versionCode">v—</code></div>
+		</div>
+
+		<div class="tabsBar" style="width:100%;">
+			<nav class="tabs"><a class="tabBtn active" data-tab="home" href="./"><span class="tabDot"></span>Home</a><a class="tabBtn" data-tab="settings" href="./pages/settings/"><span class="tabDot"></span>Settings</a><a class="tabBtn" data-tab="about" href="./pages/about/"><span class="tabDot"></span>About</a></nav>
+		</div>
+
+		<script type="module">
+			import {
+				attachFadeToScroller,
+				autoMarkActiveTab,
+				initAppSettings,
+				startOrbBackgroundFromSettings,
+				_VERSION,
+			} from "./assets/site.js"
+
+			// Set up timezone pill
+			const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "Local"
+			document.getElementById("tzPill").textContent = `Local TZ: ${tz}`
+			document.getElementById("versionCode").textContent = `v${_VERSION}`
+
+			// Initialize app settings and background
+			initAppSettings()
+			startOrbBackgroundFromSettings({
+				spawnEveryMs: 1600,
+				sizeMin: 340,
+				sizeMax: 720
+			})
+			
+			// Mark active tab
+			autoMarkActiveTab("home")
+			
+			// Attach fade scroll to toolbar
+			attachFadeToScroller(document.getElementById("toolbarScroll"), document.getElementById("toolbarFade"))
+
+			// Sample data array
+			const sampleData = [
+				{ name: "Item One", description: "First sample entry", status: "Active" },
+				{ name: "Item Two", description: "Second sample entry", status: "Pending" },
+				{ name: "Item Three", description: "Third sample entry", status: "Complete" },
+				{ name: "Item Four", description: "Fourth sample entry", status: "Active" },
+			]
+
+			// Populate table from data array
+			const dataTable = document.getElementById("dataTable")
+			for (const item of sampleData) {
+				const row = document.createElement("tr")
+				
+				const nameCell = document.createElement("td")
+				nameCell.textContent = item.name
+				
+				const descCell = document.createElement("td")
+				descCell.textContent = item.description
+				
+				const statusCell = document.createElement("td")
+				const statusTag = document.createElement("span")
+				statusTag.className = "tag"
+				statusTag.textContent = item.status
+				statusCell.appendChild(statusTag)
+				
+				row.appendChild(nameCell)
+				row.appendChild(descCell)
+				row.appendChild(statusCell)
+				dataTable.appendChild(row)
+			}
+
+			document.getElementById("statusPill").textContent = "Status: OK"
+		</script>
+	</body>
+</html>
