@@ -5,7 +5,7 @@ export { startOrbBackground, stopOrbBackground } from "../js/orb-background.js";
 export { hardReload } from "../js/utils.js";
 
 export {
-	SCRT_SETTINGS_KEY,
+	_SETTINGS_KEY,
 	getDefaultAppSettings,
 	loadAppSettings,
 	saveAppSettings,

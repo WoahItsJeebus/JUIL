@@ -10,13 +10,13 @@ ___
 ___
 ### Usage:
 ```
-<link rel="stylesheet" href="https://woahitsjeebus.github.io/JUI/site.css">
+<link rel="stylesheet" href="https://woahitsjeebus.github.io/JUIL/site.css">
 
 <script type="module">
 	import {
 		startOrbBackground,
 		initTabs
-	} from "https://woahitsjeebus.github.io/JUI/site.js"
+	} from "https://woahitsjeebus.github.io/JUIL/site.js"
 
 	startOrbBackground()
 	initTabs()
