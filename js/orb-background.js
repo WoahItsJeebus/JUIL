@@ -190,11 +190,6 @@ export function startOrbBackground(opts = {}) {
 			a1.style.opacity = "1";
 
 			el.style.transition = [
-				`left ${to.dur}ms ease-in-out`,
-				`top ${to.dur}ms ease-in-out`,
-				`width ${to.dur}ms ease-in-out`,
-				`height ${to.dur}ms ease-in-out`,
-				`filter ${to.dur}ms ease-in-out`,
 				`transform ${to.dur}ms ease-in-out`,
 				`opacity ${Math.max(450, Math.floor(to.dur * 0.35))}ms ease-in-out`,
 			].join(", ");
@@ -202,7 +197,7 @@ export function startOrbBackground(opts = {}) {
 			if (isFirst) el.style.opacity = "0";
 			requestAnimationFrame(() => {
 				el.style.opacity = "0.7";
-				el.style.transform = driftTransform(to.dx, to.dy, 1, 1.08);
+				el.style.transform = driftTransform(to, 1.0, 1.08);
 				applyFinalGeometry(el, to);
 			});
 
@@ -324,15 +319,12 @@ export function startOrbBackground(opts = {}) {
 	for (let i = 0; i < orbCount; i++) {
 		const orb = document.createElement("div");
 		orb.className = "bgOrb";
-		orb.style.willChange = "transform, opacity";
 
 		const layerA = document.createElement("div");
 		layerA.className = "bgOrbLayer";
-		layerA.style.willChange = "opacity";
 
 		const layerB = document.createElement("div");
 		layerB.className = "bgOrbLayer";
-		layerB.style.willChange = "opacity";
 
 		orb.appendChild(layerA);
 		orb.appendChild(layerB);
@@ -354,7 +346,7 @@ export function startOrbBackground(opts = {}) {
 		layerA.style.opacity = "1";
 		layerB.style.opacity = "0";
 		orb.style.opacity = "0";
-		orb.style.transform = driftTransform(init.dx, init.dy, 0.25, 0.95);
+		orb.style.transform = driftTransform(init, 0.25, 0.95);
 	}
 
 	handles.forEach((h, i) => {
