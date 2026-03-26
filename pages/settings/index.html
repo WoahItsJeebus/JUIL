@@ -134,9 +134,7 @@
 			</div>
 			<div class="tabsBar">
 				<nav class="tabs">
-					<a class="tabBtn" data-tab="home" href="../../"><span class="tabDot"></span> Home</a>
-					<a class="tabBtn active" data-tab="settings" href="../settings/"><span class="tabDot"></span> Settings</a>
-					<a class="tabBtn" data-tab="about" href="../about/"><span class="tabDot"></span> About</a>
+					<a class="tabBtn" href="javascript:void(0)" onclick="history.back()" id="returnBtn"><span class="tabDot"></span> Return</a>
 				</nav>
 			</div>
 		</div>
@@ -150,7 +148,6 @@
 				exportAppSettingsJson,
 				importAppSettingsJson,
 				startOrbBackgroundFromSettings,
-				autoMarkActiveTab,
 				hardReload,
 				_VERSION
 			} from "../../assets/site.js";
@@ -159,7 +156,6 @@
 			
 			initAppSettings();
 			startOrbBackgroundFromSettings({ spawnEveryMs: 900, sizeMin: 300, sizeMax: 640 });
-			autoMarkActiveTab("settings");
 			
 			const saveState = document.getElementById("saveState");
 			

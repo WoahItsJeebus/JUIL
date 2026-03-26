@@ -1,8 +1,13 @@
+const JUIL_SETTINGS_URL = "https://woahitsjeebus.github.io/JUIL/pages/settings/";
+
 /**
  * Mark the active bottom tab.
  * Pass a key from the page: "home", "about", "settings"
  *
  * If omitted, it tries to infer from the current path as a fallback.
+ *
+ * Also forces any settings tab to point to JUIL's own settings page
+ * so external projects that pull in JUIL don't redirect locally.
  */
 export function autoMarkActiveTab(pageKey) {
 	function inferKeyFromPath() {
@@ -18,6 +23,9 @@ export function autoMarkActiveTab(pageKey) {
 	document.querySelectorAll(".tabs .tabBtn").forEach((a) => {
 		const k = (a.getAttribute("data-tab") || "").toLowerCase();
 		a.classList.toggle("active", k === key);
+
+		// Always point settings tab to JUIL's hosted settings page
+		if (k === "settings") a.href = JUIL_SETTINGS_URL;
 	});
 }
 
