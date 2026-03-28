@@ -109,17 +109,21 @@ export function startOrbBackground(opts = {}) {
 		return id;
 	}
 
-	function randPct() {
-		return rand(-cfg.margin, 1 + cfg.margin) * 100;
-	}
-
 	function makeSpec() {
 		const size = randi(cfg.sizeMin, cfg.sizeMax);
 		const dur = randi(cfg.durMinMs, cfg.durMaxMs);
 		const blur = randi(cfg.blurMin, cfg.blurMax);
 
-		const x = randPct();
-		const y = randPct();
+		// Spawn within the currently visible viewport area
+		const scrollX = window.scrollX || 0;
+		const scrollY = window.scrollY || 0;
+		const vw = window.innerWidth;
+		const vh = window.innerHeight;
+		const mx = vw * cfg.margin;
+		const my = vh * cfg.margin;
+
+		const x = scrollX + rand(-mx, vw + mx);
+		const y = scrollY + rand(-my, vh + my);
 
 		const dx = randi(-28, 28);
 		const dy = randi(-24, 24);
@@ -153,7 +157,7 @@ export function startOrbBackground(opts = {}) {
 		orbEl.style.width = `${cfg.baseSizePx}px`;
 		orbEl.style.height = `${cfg.baseSizePx}px`;
 		orbEl.style.filter = `blur(${spec.blur}px)`;
-		orbEl.style.transform = `translate3d(${spec.x}vw, ${spec.y}vh, 0) translate(-50%, -50%) scale(${spec.s})`;
+		orbEl.style.transform = `translate3d(${spec.x}px, ${spec.y}px, 0) translate(-50%, -50%) scale(${spec.s})`;
 	}
 
 	function lerp(a, b, t) {
@@ -165,7 +169,7 @@ export function startOrbBackground(opts = {}) {
 		const oy = spec.dy * t;
 		const s = spec.s * extraScale;
 
-		return `translate3d(${spec.x}vw, ${spec.y}vh, 0) translate(-50%, -50%) translate3d(${ox}px, ${oy}px, 0) scale(${s})`;
+		return `translate3d(${spec.x}px, ${spec.y}px, 0) translate(-50%, -50%) translate3d(${ox}px, ${oy}px, 0) scale(${s})`;
 	}
 
 	function animateOrb(handle, isFirst = false) {

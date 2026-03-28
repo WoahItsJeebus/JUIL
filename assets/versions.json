@@ -1,5 +1,5 @@
 {
-	"current": "1.0.0.2",
+	"current": "1.0.0.3",
 	"1.0": {
 		"1.0.0.0": [
 			"Initial release."
@@ -9,6 +9,9 @@
 		],
 		"1.0.0.2": [
 			"Added .tableFade to css for giving a fade effect to the right of tables when they are scrollable. Applied this class to the sample data table."
+		],
+		"1.0.0.3": [
+			"Background orbs now use absolute document positioning instead of fixed viewport positioning. Orbs spawn within the currently visible area and scroll naturally with page content. Removed viewport clipping so orbs are no longer cut off at edges."
 		]
 	}
 }

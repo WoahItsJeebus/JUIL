@@ -18,6 +18,10 @@ html, body{
   scrollbar-width: none;
 }
 
+html {
+  overflow-x: clip;
+}
+
 html::-webkit-scrollbar,
 body::-webkit-scrollbar{
   width: 0;

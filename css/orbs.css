@@ -3,15 +3,14 @@
    ============================================================ */
 
 .bgOrbs {
-	position: fixed;
+	position: absolute;
 	inset: 0;
-	overflow: hidden;
 	pointer-events: none;
 	touch-action: none;
 	z-index: 0;
 
 	/* Isolate from foreground layout/paint entirely */
-	contain: strict;
+	contain: layout style;
 	isolation: isolate;
 }
 
@@ -33,8 +32,8 @@
    instead of creating/removing many .bgOrb nodes (layering). */
 .bgOrb {
 	position: absolute;
-	left: 50%;
-	top: 50%;
+	left: 0;
+	top: 0;
 	width: 420px;
 	height: 420px;
 	border-radius: 999px;
