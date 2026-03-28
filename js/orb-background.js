@@ -94,7 +94,8 @@ export function startOrbBackground(opts = {}) {
 		layer = document.createElement("div");
 		layer.className = "bgOrbs";
 		layer.setAttribute("aria-hidden", "true");
-		document.body.prepend(layer);
+		const wrap = document.querySelector(".wrap");
+		(wrap || document.body).prepend(layer);
 	}
 
 	let stopped = false;
@@ -114,16 +115,15 @@ export function startOrbBackground(opts = {}) {
 		const dur = randi(cfg.durMinMs, cfg.durMaxMs);
 		const blur = randi(cfg.blurMin, cfg.blurMax);
 
-		// Spawn within the currently visible viewport area
-		const scrollX = window.scrollX || 0;
-		const scrollY = window.scrollY || 0;
+		// Spawn within the currently visible viewport, in layer-local coords
 		const vw = window.innerWidth;
 		const vh = window.innerHeight;
 		const mx = vw * cfg.margin;
 		const my = vh * cfg.margin;
 
-		const x = scrollX + rand(-mx, vw + mx);
-		const y = scrollY + rand(-my, vh + my);
+		const rect = layer.getBoundingClientRect();
+		const x = rand(-mx, vw + mx) - rect.left;
+		const y = rand(-my, vh + my) - rect.top;
 
 		const dx = randi(-28, 28);
 		const dy = randi(-24, 24);
